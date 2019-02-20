@@ -1,5 +1,6 @@
 # dcnlp
 Drug overdose classification using NLP
+
 To use this code, create a file with three fields from your death certificate data: 
   1. "DC_YEAR", the year of death
   2. "OD", a 0/1 indicator if a record is an overdose death or not
