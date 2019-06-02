@@ -22,7 +22,7 @@ matplotlib
 pickle
 ```
 
-Installing `Anaconda` should come with all of these libraries pre-installed. `en_web_core_sm` from `spaCy` may need to be installed.
+Installing `Anaconda` should automatically pre-install these libraries. `en_web_core_sm` from `spaCy` may need to be installed separately.
 
 ## Using the code
 
