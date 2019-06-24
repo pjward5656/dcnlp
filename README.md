@@ -22,7 +22,8 @@ matplotlib
 pickle
 ```
 
-Installing `Anaconda` should automatically pre-install these libraries. `en_web_core_sm` from `spaCy` may need to be installed separately. This code was developed using `sklearn` version 0.19.2. 
+Installing `Anaconda` should automatically pre-install these libraries. `en_web_core_sm` from `spaCy` may need to be installed separately.
+This code was developed using `sklearn` version 0.19.2. 
 
 ## Using the code
 
@@ -33,3 +34,9 @@ To run this code, create a .csv file with three fields from your death certifica
      that you wish to use for classification, with all punctuation removed, in all caps
 
 Local file paths in the example file will need to be changed as you use the code.
+
+The C parameter values that are tuned in the `SVC` are initiated by the investigator.
+After initializing the valuues, additional tuning steps are performed around the C parameter value that worked best in the previous
+training step.
+The C parameter values in the python scripts represent the values that were used for the original model tuning.
+These values will need to be changed based on the values that are working best for your data. 
