@@ -36,7 +36,7 @@ To run this code, create a .csv file with three fields from your death certifica
 Local file paths in the example file will need to be changed as you use the code.
 
 The C parameter values that are tuned in the `SVC` are initiated by the investigator.
-After initializing the valuues, additional tuning steps are performed around the C parameter value that worked best in the previous
+After initializing the values, additional tuning steps are performed around the C parameter value that worked best in the previous
 training step.
 The C parameter values in the python scripts represent the values that were used for the original model tuning.
 These values will need to be changed based on the values that are working best for your data. 
