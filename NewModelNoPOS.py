@@ -87,6 +87,7 @@ np.shape(X_train_words)
 from sklearn import metrics
 from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.neural_network import MLPClassifier
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import classification_report
 from sklearn.model_selection import RepeatedStratifiedKFold
@@ -167,37 +168,66 @@ plot_confusion_matrix(cnf_matrix, classes=class_names,
                       title='Confusion matrix')
 
 "Now, Random Forest Approach"
-"Start with 100 trees, default settings"
+tuned_params={
+    'n_estimators': [50, 100],
+    'max_features': ['auto', 'sqrt', 'log2'],
+}
+
+clf=GridSearchCV(RandomForestClassifier(), tuned_params, cv=cross_validation, scoring='f1')
+clf.fit(X_train_final, y_train)
+predicted=clf.predict(X_train_final)
+print(classification_report(y_train, predicted))
+
+cnf_matrix=metrics.confusion_matrix(y_train, predicted)
+class_names = ['Not OD', 'Drug OD']
+plt.figure()
+plot_confusion_matrix(cnf_matrix, classes=class_names,
+                      title='Confusion matrix')
+
+means = clf.cv_results_['mean_test_score']
+stds = clf.cv_results_['std_test_score']
+for mean, std, params in zip(means, stds, clf.cv_results_['params']):
+    print("%0.3f (+/-%0.03f) for %r"
+          % (mean, std * 2, params))
+
+print('Best parameters found:\n', clf.best_params_)
+
+"Now re-train on full data with best parameters"
 clf=RandomForestClassifier(n_estimators=100)
 clf.fit(X_train_final, y_train)
-predicted=clf.predict(X_train_final)
-print(classification_report(y_train, predicted))
 
-"Change the minimum samples, see if results improve"
-clf=RandomForestClassifier(n_estimators=100, min_samples_leaf=2)
+predicted_test=clf.predict(X_test_final)
+print(classification_report(y_test, predicted_test))
+
+cnf_matrix=metrics.confusion_matrix(y_test, predicted_test)
+class_names = ['Not OD', 'Drug OD']
+plt.figure()
+plot_confusion_matrix(cnf_matrix, classes=class_names,
+                      title='Confusion matrix')
+
+"Now, MLP approach"
+parameter_space={
+    'hidden_layer_sizes': [(50,50,50), (50,100,50), (100,)],
+}
+
+clf=GridSearchCV(MLPClassifier(), parameter_space, cv=cross_validation, scoring='f1')
 clf.fit(X_train_final, y_train)
+
 predicted=clf.predict(X_train_final)
 print(classification_report(y_train, predicted))
 
-"Change again"
-clf=RandomForestClassifier(n_estimators=100, min_samples_leaf=3)
+means = clf.cv_results_['mean_test_score']
+stds = clf.cv_results_['std_test_score']
+for mean, std, params in zip(means, stds, clf.cv_results_['params']):
+    print("%0.3f (+/-%0.03f) for %r"
+          % (mean, std * 2, params))
+
+print('Best parameters found:\n', clf.best_params_)
+
+"Now re-train on full data with best parameters"
+clf=MLPClassifier(hidden_layer_sizes=(100,))
 clf.fit(X_train_final, y_train)
-predicted=clf.predict(X_train_final)
-print(classification_report(y_train, predicted))
 
-"Again"
-clf=RandomForestClassifier(n_estimators=100, min_samples_leaf=4)
-clf.fit(X_train_final, y_train)
-predicted=clf.predict(X_train_final)
-print(classification_report(y_train, predicted))
-
-"The default has perfect prediction on training data, re-run it with 500 estimators"
-clf=RandomForestClassifier(n_estimators=500)
-clf.fit(X_train_final, y_train)
-predicted=clf.predict(X_train_final)
-print(classification_report(y_train, predicted))
-
-"Now run on test data"
 predicted_test=clf.predict(X_test_final)
 print(classification_report(y_test, predicted_test))
 
