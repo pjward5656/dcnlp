@@ -3,7 +3,7 @@ Drug overdose classification from death certificates using NLP
 
 ## Getting started
 
-This page contains a python script for analyzing free-text death certificates for drug overdose classification purposes.
+This page contains a `Jupyter` notebook for analyzing free-text death certificates for drug overdose classification purposes.
 
 ### Prerequisites
 
@@ -35,7 +35,7 @@ To run this code, create a .csv file with three fields from your death certifica
 Local file paths in the example file will need to be changed as you use the code.
 
 The hyperparameter values that are tuned in are initiated by the investigator.
-After initializing the values, additional tuning steps are performed around the hyperparameter valuea that worked best in the previous
+After initializing the values, additional tuning steps are performed around the hyperparameter values that worked best in the previous
 training step.
-The hyperparameter values in the python notebooks represent the values that were used for the original model tuning.
+The hyperparameter values in the `Jupyter` notebook represent the values that were used for the original model tuning.
 These values will need to be changed based on the values that are working best for your data. 
